@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useAuth } from '../hooks/useAuth'
 import { useMedicamentos } from '../hooks/useMedicamentos'
-import { eliminarMedicamento } from '../services/medicamentos'
+import { desactivarMedicamento } from '../services/medicamentos'
 import ModalMedicamento from '../components/ui/ModalMedicamento'
 
 export default function Medicamentos() {
@@ -23,7 +23,7 @@ export default function Medicamentos() {
   const handleEliminar = async (med) => {
     if (!confirm(`¿Eliminar ${med.nombre}?`)) return
     try {
-      await eliminarMedicamento(user.uid, med.id)
+      await desactivarMedicamento(user.uid, med.id)
     } catch (err) {
       console.error(err)
     }
