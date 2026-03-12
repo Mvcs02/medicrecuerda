@@ -5,10 +5,19 @@ import { AuthProvider } from './context/AuthContext'
 import App from './App.jsx'
 import './index.css'
 
-// Forzar actualización cuando hay nuevo Service Worker
 if ('serviceWorker' in navigator) {
+  // Recargar cuando el SW toma control
   navigator.serviceWorker.addEventListener('controllerchange', () => {
     window.location.reload()
+  })
+
+  // Verificar actualizaciones cada vez que el usuario vuelve a la app
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') {
+      navigator.serviceWorker.ready.then((reg) => {
+        reg.update()
+      })
+    }
   })
 }
 
